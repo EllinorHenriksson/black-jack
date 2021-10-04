@@ -1,0 +1,90 @@
+include:
+  - project: 'pipelines/stages'
+    file: '/check_plagiarism/java/.check_plagiarism.yml'
+
+# This file is a template, and might need editing before it works on your project.
+# This is the Gradle build system for JVM applications
+# https://gradle.org/
+# https://github.com/gradle/gradle
+# search for official images here: https://hub.docker.com/_/gradle/?tab=tags&page=1&ordering=last_updated
+# image: gradle:alpine
+image: gradle:7.2-jdk16
+
+# Disable the Gradle daemon for Continuous Integration servers as correctness
+# is usually a priority over speed in CI environments. Using a fresh
+# runtime for each build is more reliable since the runtime is completely
+# isolated from any previous builds.
+variables:
+  GRADLE_OPTS: "-Dorg.gradle.daemon=false"
+
+stages:
+  - build
+  - build_mr
+  - test
+  - test_mr
+  - check_plagiarism
+
+before_script:
+  - export GRADLE_USER_HOME=`pwd`/.gradle
+
+build:
+  stage: build
+  script: ./gradlew --build-cache assemble
+  cache:
+    key: "$CI_COMMIT_REF_NAME"
+    policy: push
+    paths:
+      - build
+      - .gradle
+
+test:
+  stage: test
+  script: ./gradlew test
+  cache:
+    key: "$CI_COMMIT_REF_NAME"
+    policy: pull
+    paths:
+      - build
+      - .gradle
+  artifacts:
+    reports:
+      junit:
+        - build/test-results/TEST-*.xml
+        - build/test-results/test/TEST-*.xml
+
+build_mr:
+  stage: build_mr
+  rules:
+    # Only run if it is an MR.
+    - if: $CI_MERGE_REQUEST_ID
+      when: always
+  script: ./gradlew --build-cache assemble
+  cache:
+    key: "$CI_COMMIT_REF_NAME"
+    policy: push
+    paths:
+      - build
+      - .gradle
+
+test_mr:
+  stage: test_mr
+  rules:
+    # Only run if it is an MR.
+    - if: $CI_MERGE_REQUEST_ID
+      when: always
+  script: ./gradlew test
+  cache:
+    key: "$CI_COMMIT_REF_NAME"
+    policy: pull
+    paths:
+      - build
+      - .gradle
+  artifacts:
+    reports:
+      junit:
+        - build/test-results/TEST-*.xml
+        - build/test-results/test/TEST-*.xml
+
+check_plagiarism:
+  variables:
+    BOILERPLATE_REPO: "git@gitlab.lnu.se:1dv607/template/a3_2_3.git"
