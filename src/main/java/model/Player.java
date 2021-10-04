@@ -8,11 +8,11 @@ import java.util.List;
  */
 public class Player {
 
-  private List<Card> hand;
+  private List<Card.Mutable> hand;
   protected final int maxScore = 21;
 
   public Player() {
-    hand = new LinkedList<Card>();
+    hand = new LinkedList<Card.Mutable>();
   }
 
   /**
@@ -20,7 +20,7 @@ public class Player {
 
    * @param addToHand The card to add to the hand.
    */
-  public void dealCard(Card addToHand) {
+  public void dealCard(Card.Mutable addToHand) {
     hand.add(addToHand);
   }
 
@@ -30,7 +30,7 @@ public class Player {
    * @return the cards in the Player's hand
    */
   public Iterable<Card> getHand() {
-    return hand;
+    return new LinkedList<Card>(hand);
   }
 
   /**
@@ -44,7 +44,7 @@ public class Player {
    * Shows all cards in the hand.
    */
   public void showHand() {
-    for (Card c : getHand()) {
+    for (Card.Mutable c : hand) {
       c.show(true);
     }
   }

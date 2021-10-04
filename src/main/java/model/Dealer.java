@@ -48,7 +48,7 @@ public class Dealer extends Player {
    */
   public boolean hit(Player player) {
     if (deck != null && player.calcScore() < maxScore && !isGameOver()) {
-      Card c;
+      Card.Mutable c;
       c = deck.getCard();
       c.show(true);
       player.dealCard(c);

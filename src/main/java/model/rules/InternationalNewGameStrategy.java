@@ -9,7 +9,7 @@ import model.Player;
 class InternationalNewGameStrategy implements NewGameStrategy {
 
   public boolean newGame(Deck deck, Dealer dealer, Player player) {
-    Card c;
+    Card.Mutable c;
 
     c = deck.getCard();
     c.show(true);

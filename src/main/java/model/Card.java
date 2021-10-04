@@ -1,7 +1,7 @@
 package model;
 
 /**
- * Represents a common playing card that can be hidden i.e. face down.
+ * Represents an immutable common playing card that is hidden i.e. face down.
  */
 public class Card {
 
@@ -19,9 +19,34 @@ public class Card {
     Two, Three, Four, Five, Six, Seven, Eight, Nine, Ten, Knight, Queen, King, Ace, Count, Hidden
   }
 
+
+  /**
+   * Represents a Mutable playing card, that can be shown or hidden.
+   */
+  public static class Mutable extends Card {
+    /**
+      * Initalizing constructor that creates a hidden card.
+
+      * @param color The color of the card.
+      * @param value The value of the card.
+     */
+    public Mutable(Color color, Value value) {
+      super(color, value);
+    }
+
+    /**
+     * Initalizing constructor that creates a hidden card.
+
+      * @param show true if the card is to be shown.
+      */
+    public void show(boolean show) {
+      isHidden = !show;
+    }
+  }
+
   private Color color;
   private Value value;
-  private boolean isHidden;
+  protected boolean isHidden;
 
   /**
    * Initalizing constructor that creates a hidden card.
@@ -59,12 +84,5 @@ public class Card {
     return value;
   }
 
-  /**
-   * Shows or hides a card.
-
-   * @param show False if the card should have the face down.
-   */
-  public void show(boolean show) {
-    isHidden = !show;
-  }
+  
 }
