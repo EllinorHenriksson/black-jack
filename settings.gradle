@@ -1,2 +1,3 @@
 rootProject.name = 'black_jack'
+include('app')
 
