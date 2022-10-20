@@ -17,20 +17,30 @@ public class EnglishView implements View {
   }
 
   /**
-   * Returns pressed characters from the keyboard.
+   * Transform input from the keyboard to a user action and returns it.
 
-   * @return the pressed character.
+   * @return the user action.
    */
-  public int getInput() {
+  public Action getAction() {
     try {
       int c = System.in.read();
       while (c == '\r' || c == '\n') {
         c = System.in.read();
       }
-      return c;
+
+      if (c == 'p') {
+        return Action.PLAY;
+      } else if (c == 'h') {
+        return Action.HIT;
+      } else if (c == 's') {
+        return Action.STAND;
+      } else if (c == 'q') {
+        return Action.QUIT;
+      }
+      return Action.INVALID;
     } catch (java.io.IOException e) {
       System.out.println("" + e);
-      return 0;
+      return Action.INVALID;
     }
   }
 

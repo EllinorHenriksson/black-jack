@@ -11,11 +11,11 @@ public interface View {
   void displayWelcomeMessage();
 
   /**
-   * Returns pressed characters from the keyboard.
+   * Transform input from the keyboard to a user action and returns it.
 
-   * @return the pressed character.
+   * @return the user action.
    */
-  int getInput();
+  Action getAction();
 
   /**
    * Displays a card.

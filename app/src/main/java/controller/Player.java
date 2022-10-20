@@ -1,6 +1,7 @@
 package controller;
 
 import model.Game;
+import view.Action;
 import view.View;
 
 
@@ -26,16 +27,16 @@ public class Player {
       view.displayGameOver(game.isDealerWinner());
     }
 
-    int input = view.getInput();
+    Action choice = view.getAction();
 
-    if (input == 'p') {
+    if (choice == Action.PLAY) {
       game.newGame();
-    } else if (input == 'h') {
+    } else if (choice == Action.HIT) {
       game.hit();
-    } else if (input == 's') {
+    } else if (choice == Action.STAND) {
       game.stand();
     }
 
-    return input != 'q';
+    return choice != Action.QUIT;
   }
 }
