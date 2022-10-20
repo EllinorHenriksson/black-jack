@@ -58,8 +58,7 @@ public class Game {
    * @return True if the dealer has the initiaive.
    */
   public boolean stand() {
-    // TODO: implement me
-    return false;
+    return dealer.stand();
   }
 
   /**
