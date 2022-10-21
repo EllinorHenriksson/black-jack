@@ -84,6 +84,7 @@ public class SwedishView implements View {
     } else {
       System.out.println("Du vann!");
     }
+    System.out.println("");
   }
 
   private void displayHand(String name, Iterable<model.Card> hand, int score) {

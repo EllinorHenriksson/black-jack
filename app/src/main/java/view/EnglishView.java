@@ -77,6 +77,6 @@ public class EnglishView implements View {
     } else {
       System.out.println("You Won!");
     }
-
+    System.out.println("");
   }
 }

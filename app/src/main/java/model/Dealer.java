@@ -1,5 +1,7 @@
 package model;
 
+import java.util.LinkedList;
+import java.util.List;
 import model.rules.HitStrategy;
 import model.rules.NewGameStrategy;
 import model.rules.RulesFactory;
@@ -14,6 +16,7 @@ public class Dealer extends Player {
   private NewGameStrategy newGameRule;
   private HitStrategy hitRule;
   private WinnerStrategy winnerRule;
+  private List<NewCardObserver> subscribers;
 
   /**
    * Initializing constructor.
@@ -25,6 +28,34 @@ public class Dealer extends Player {
     newGameRule = rulesFactory.getNewGameRule();
     hitRule = rulesFactory.getHitRule();
     winnerRule = rulesFactory.getWinnerRule();
+    subscribers = new LinkedList<NewCardObserver>();
+  }
+
+  /**
+   * Adds a subscriber.
+   *
+   * @param subscriber The subscriber to add.
+   */
+  public void subscribe(NewCardObserver subscriber) {
+    subscribers.add(subscriber);
+  }
+
+  /**
+   * Removes a subscriber.
+   *
+   * @param subscriber The subscriber to remove.
+   */
+  public void unsubscribe(NewCardObserver subscriber) {
+    subscribers.remove(subscriber);
+  }
+
+  /**
+   * Notifies all subscribers.
+   */
+  public void notifySubscribers() {
+    for (NewCardObserver s : subscribers) {
+      s.update();
+    }
   }
 
   /**
@@ -67,6 +98,8 @@ public class Dealer extends Player {
     Card.Mutable card = deck.getCard();
     card.show(show);
     receiver.dealCard(card);
+
+    notifySubscribers();
   }
 
   /**
