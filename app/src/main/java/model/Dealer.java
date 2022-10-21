@@ -38,7 +38,7 @@ public class Dealer extends Player {
       deck = new Deck();
       clearHand();
       player.clearHand();
-      return newGameRule.newGame(deck, this, player);
+      return newGameRule.newGame(this, player);
     }
     return false;
   }
@@ -51,14 +51,22 @@ public class Dealer extends Player {
    */
   public boolean hit(Player player) {
     if (deck != null && player.calcScore() < maxScore && !isGameOver()) {
-      Card.Mutable c;
-      c = deck.getCard();
-      c.show(true);
-      player.dealCard(c);
-
+      drawAndDealCard(true, player);
       return true;
     }
     return false;
+  }
+
+  /**
+   * Draws a card from the deck, shows or hides it, and deals it to the dealer or player.
+   *
+   * @param show True if the card should be shown, false if it should be hidden
+   * @param receiver The dealer or player who should be dealt the card.
+   */
+  public void drawAndDealCard(Boolean show, Player receiver) {
+    Card.Mutable card = deck.getCard();
+    card.show(show);
+    receiver.dealCard(card);
   }
 
   /**
@@ -73,7 +81,7 @@ public class Dealer extends Player {
     } else if (calcScore() > maxScore) {
       return false;
     }
-    
+
     return winnerRule.isDealerWinner(this, player);
   }
 
@@ -97,9 +105,7 @@ public class Dealer extends Player {
       showHand();
 
       while (hitRule.doHit(this) == true) {
-        Card.Mutable c = deck.getCard();
-        c.show(true);
-        dealCard(c);
+        drawAndDealCard(true, this);
       }
 
       return true;
@@ -107,5 +113,4 @@ public class Dealer extends Player {
 
     return false;
   }
-
 }
