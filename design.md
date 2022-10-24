@@ -10,3 +10,8 @@ The application uses the model-view-controller (MVC) architectural pattern. The 
 This is the detailed sequence diagram for the `Game.stand` method. This is what should be implemented.
 
 ![Stand Sequence diagram](img/stand_seq.jpg)
+
+## Updated class diagram
+The class diagram was updated to reflect the changes that were made during the assignment.
+
+![updated class diagram](img/class-diagram-updated.jpeg)
