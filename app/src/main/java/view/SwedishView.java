@@ -1,10 +1,9 @@
 package view;
 
 /**
- * Implements a Swedish console view.
+ * Represents a Swedish console view.
  */
-public class SwedishView implements View {
-
+public class SwedishView extends View {
   /**
    * Shows a welcome message.
    */
@@ -16,34 +15,6 @@ public class SwedishView implements View {
     System.out.println("Hej Black Jack Världen");
     System.out.println("----------------------");
     System.out.println("Skriv 'p' för att Spela, 'h' för nytt kort, 's' för att stanna 'q' för att avsluta\n");
-  }
-
-  /**
-   * Transform input from the keyboard to a user action and returns it.
-
-   * @return the user action.
-   */
-  public Action getAction() {
-    try {
-      int c = System.in.read();
-      while (c == '\r' || c == '\n') {
-        c = System.in.read();
-      }
-
-      if (c == 'p') {
-        return Action.PLAY;
-      } else if (c == 'h') {
-        return Action.HIT;
-      } else if (c == 's') {
-        return Action.STAND;
-      } else if (c == 'q') {
-        return Action.QUIT;
-      }
-      return Action.INVALID;
-    } catch (java.io.IOException e) {
-      System.out.println("" + e);
-      return Action.INVALID;
-    }
   }
 
   /**
