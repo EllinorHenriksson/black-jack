@@ -12,5 +12,10 @@ public class DealerWinsOnEqualStrategy implements WinnerStrategy {
   public boolean isDealerWinner(Dealer dealer, Player player) {
     return dealer.calcScore() >= player.calcScore();
   }
+
+  @Override
+  public void accept(RuleVisitor visitor) {
+    visitor.visit(this);
+  }
   
 }

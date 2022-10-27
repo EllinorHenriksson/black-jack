@@ -3,9 +3,13 @@ package model.rules;
 import model.Dealer;
 import model.Player;
 
-
-class InternationalNewGameStrategy implements NewGameStrategy {
-
+/**
+ * Represents an international new game strategy.
+ */
+public class InternationalNewGameStrategy implements NewGameStrategy {
+  /**
+   * Deals cards to dealer and player acording to the international new game rule.
+   */
   public boolean newGame(Dealer dealer, Player player) {
     Boolean show = true;
 
@@ -14,5 +18,10 @@ class InternationalNewGameStrategy implements NewGameStrategy {
     dealer.drawAndDealCard(show, player);
 
     return true;
+  }
+
+  @Override
+  public void accept(RuleVisitor visitor) {
+    visitor.visit(this);
   }
 }

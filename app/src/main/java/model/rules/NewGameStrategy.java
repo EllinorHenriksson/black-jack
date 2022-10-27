@@ -1,7 +1,6 @@
 package model.rules;
 
 import model.Dealer;
-import model.Deck;
 import model.Player;
 
 /**
@@ -16,4 +15,6 @@ public interface NewGameStrategy {
    * @return True if the game could be started.
    */
   boolean newGame(Dealer dealer, Player player);
+
+  public void accept(RuleVisitor visitor);
 }

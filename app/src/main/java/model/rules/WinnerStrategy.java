@@ -15,4 +15,6 @@ public interface WinnerStrategy {
    * @return True if the dealer wins.
    */
   public boolean isDealerWinner(Dealer dealer, Player player);
+
+  public void accept(RuleVisitor visitor);
 }

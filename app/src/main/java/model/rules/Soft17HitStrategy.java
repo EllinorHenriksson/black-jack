@@ -65,4 +65,9 @@ public class Soft17HitStrategy implements HitStrategy {
 
     return score;
   }
+
+  @Override
+  public void accept(RuleVisitor visitor) {
+    visitor.visit(this);
+  }
 }

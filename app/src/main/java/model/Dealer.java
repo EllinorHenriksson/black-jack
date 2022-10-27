@@ -4,6 +4,7 @@ import java.util.LinkedList;
 import java.util.List;
 import model.rules.HitStrategy;
 import model.rules.NewGameStrategy;
+import model.rules.RuleVisitor;
 import model.rules.RulesFactory;
 import model.rules.WinnerStrategy;
 
@@ -145,5 +146,16 @@ public class Dealer extends Player {
     }
 
     return false;
+  }
+
+  /**
+   * Lets the visitor visit the game rules.
+   *
+   * @param visitor The rule visitor.
+   */
+  public void visitRules(RuleVisitor visitor) {
+    newGameRule.accept(visitor);
+    hitRule.accept(visitor);
+    winnerRule.accept(visitor);
   }
 }

@@ -1,7 +1,5 @@
 package view;
 
-import java.util.Scanner;
-
 /**
  * Implements a Swedish console view.
  */

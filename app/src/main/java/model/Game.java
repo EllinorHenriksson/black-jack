@@ -1,5 +1,6 @@
 package model;
 
+import model.rules.RuleVisitor;
 import model.rules.RulesFactory;
 
 /**
@@ -105,4 +106,7 @@ public class Game {
     return player.calcScore();
   }
 
+  public void visitRules(RuleVisitor visitor) {
+    dealer.visitRules(visitor);
+  }
 }

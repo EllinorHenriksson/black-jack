@@ -13,4 +13,6 @@ public interface HitStrategy {
    * @return True if the rule decided the player should take another card.
    */
   boolean doHit(Player dealer);
+
+  public void accept(RuleVisitor visitor);
 }

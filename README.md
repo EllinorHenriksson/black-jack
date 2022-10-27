@@ -16,3 +16,4 @@ Game and the View as arguments and sets them as private fields.
 
 ### Grade 3
 - The abstract factory pattern was implemented to produce different combinations of game rules. The class RulesFactory was replaced by an interface with the same name and with the same method signatures, and two concrete factories were created that implements the interface - AmericanBasicDealerFactory and InternationalSoftPlayerFactory.
+- The visitor pattern was implemented by creating a visitor interface - RuleVisitor - in the model, and two concrete visitors - EnglishRulePrinter and SwedishRulePrinter - in the view. In the model, an accept() method was added to the strategy interfaces and its concrete classes. In that way, no relation had to be created from the model to the UI. 
