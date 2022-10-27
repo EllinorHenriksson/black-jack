@@ -11,7 +11,12 @@ This is the detailed sequence diagram for the `Game.stand` method. This is what 
 
 ![Stand Sequence diagram](img/stand_seq.jpg)
 
-## Updated class diagram
+## Updated class diagram grade 2
 The class diagram was updated to reflect the changes that were made during the assignment.
 
-![updated class diagram](img/class-diagram-updated.jpeg)
+![updated class diagram grade 2](img/class-diagram-grade-2.jpeg)
+
+## Updated class diagram grade 3
+The class diagram was updated to reflect the changes that were made during the assignment.
+
+![updated class diagram grade 3](img/class-diagram-grade-3.jpeg)
