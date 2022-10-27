@@ -1,6 +1,8 @@
 package controller;
 
 import model.Game;
+import model.rules.InternationalSoftPlayerFactory;
+import model.rules.RulesFactory;
 import view.EnglishView;
 import view.View;
 
@@ -14,8 +16,8 @@ public class App {
   * @param args Not used.
   */
   public static void main(String[] args) {
-
-    Game g = new Game();
+    RulesFactory rulesFactory = new InternationalSoftPlayerFactory();
+    Game g = new Game(rulesFactory);
     View v = new EnglishView(); // new SwedishView();
     Player ctrl = new Player(g, v);
 

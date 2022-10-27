@@ -1,34 +1,28 @@
 package model.rules;
 
 /**
- * Creates concrete rules.
+ * Interface for a factory that creates different game rules.
  */
-public class RulesFactory {
+public interface RulesFactory {
 
   /**
    * Creates the rule to use for the dealer's hit behavior.
 
    * @return The rule to use
    */
-  public HitStrategy getHitRule() {
-    return new Soft17HitStrategy();
-  }
+  public HitStrategy getHitRule();
 
   /**
    * Creates the rule to use when starting a new game.
 
    * @return The rule to use.
    */
-  public NewGameStrategy getNewGameRule() {
-    return new AmericanNewGameStrategy();
-  }
+  public NewGameStrategy getNewGameRule();
 
   /**
    * Creates the rule to use when deciding who won the game by comparing scores.
 
    * @return The rule to use.
    */
-  public WinnerStrategy getWinnerRule() {
-    return new DealerWinsOnEqualStrategy();
-  }
+  public WinnerStrategy getWinnerRule();
 }

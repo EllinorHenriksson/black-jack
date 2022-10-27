@@ -1,5 +1,7 @@
 package model;
 
+import model.rules.RulesFactory;
+
 /**
  * Represents the entirety of the game. Acts as a Facade to the model.
  */
@@ -10,9 +12,11 @@ public class Game {
 
   /**
    * Constructor that creates a new game instance with a dealer and player.
+   *
+   * @param rulesFactory The rules factory to use in the game.
    */
-  public Game() {
-    dealer = new Dealer(new model.rules.RulesFactory());
+  public Game(RulesFactory rulesFactory) {
+    dealer = new Dealer(rulesFactory);
     player = new Player();
   }
 

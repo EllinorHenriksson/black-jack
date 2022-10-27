@@ -5,6 +5,7 @@ Assignment 3, grade 2 and 3.
 Ellinor Henriksson <eh224kr@student.lnu.se>
 
 ## Changes to the code
+### Grade 2
 - Game::Stand was implemented according to the sequence diagram of the task description
 - An enum - Action - was implemented to be returned from the view to the controller class Player, to get rid of the hidden dependency between them.
 - A class - Soft17HitStrategy - that implements the interface HitStrategy was created. The RulesFactory was changed to return this strategy instead of BasicHitStrategy.
@@ -12,3 +13,6 @@ Ellinor Henriksson <eh224kr@student.lnu.se>
 - The duplicated code for getting a card from the deck, show the card and giving it to a player is refactored to its own method in the Dealer class. This also affects the NewGameStrategy wich doesn't longer need to take a Deck object as an argument to its newGame() method - for details of the implementation see the concrete strategy classes. This supports low coupling/hight cohesion as the strategies are no longer dependent on the Deck class or the Card class, and the Dealer utilizes its Deck attribute in the newly created drawAndDealCard() method.
 - The observer pattern is implemented to handle the event of when a player gets a new card. A strategy interface was created in the model package, and the Dealer used as publisher. The controller Player implements the strategy, and is added as a subscriber to the Dealer in the Player's constructor, through the Game. I changed the constructor of the controller Player to make this possible, wich now takes the 
 Game and the View as arguments and sets them as private fields.
+
+### Grade 3
+- The abstract factory pattern was implemented to produce different combinations of game rules. The class RulesFactory was replaced by an interface with the same name and with the same method signatures, and two concrete factories were created that implements the interface - AmericanBasicDealerFactory and InternationalSoftPlayerFactory.
