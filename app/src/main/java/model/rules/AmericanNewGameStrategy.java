@@ -1,31 +1,30 @@
 package model.rules;
 
-import model.Card;
 import model.Dealer;
-import model.Deck;
 import model.Player;
 
-class AmericanNewGameStrategy implements NewGameStrategy {
+/**
+ * Represents an American new game strategy.
+ */
+public class AmericanNewGameStrategy implements NewGameStrategy {
 
-  public boolean newGame(Deck deck, Dealer dealer, Player player) {
-    Card.Mutable c;
+  /**
+   * Deals cards to dealer and pleyer according to the american new game rule.
+   */
+  public boolean newGame(Dealer dealer, Player player) {
+    boolean show = true;
+    boolean hide = false;
 
-    c = deck.getCard();
-    c.show(true);
-    player.dealCard(c);
-
-    c = deck.getCard();
-    c.show(true);
-    dealer.dealCard(c);
-
-    c = deck.getCard();
-    c.show(true);
-    player.dealCard(c);
-
-    c = deck.getCard();
-    c.show(false);
-    dealer.dealCard(c);
+    dealer.drawAndDealCard(show, player);
+    dealer.drawAndDealCard(show, dealer);
+    dealer.drawAndDealCard(show, player);
+    dealer.drawAndDealCard(hide, dealer);
 
     return true;
+  }
+
+  @Override
+  public void accept(RuleVisitor visitor) {
+    visitor.visit(this);
   }
 }

@@ -1,10 +1,9 @@
 package view;
 
 /**
- * Implements an english console view.
+ * Represents an english console view.
  */
-public class EnglishView implements View {
-
+public class EnglishView extends View {
   /**
    * Shows a welcome message.
    */
@@ -14,24 +13,6 @@ public class EnglishView implements View {
     }
     System.out.println("Hello Black Jack World");
     System.out.println("Type 'p' to Play, 'h' to Hit, 's' to Stand or 'q' to Quit\n");
-  }
-
-  /**
-   * Returns pressed characters from the keyboard.
-
-   * @return the pressed character.
-   */
-  public int getInput() {
-    try {
-      int c = System.in.read();
-      while (c == '\r' || c == '\n') {
-        c = System.in.read();
-      }
-      return c;
-    } catch (java.io.IOException e) {
-      System.out.println("" + e);
-      return 0;
-    }
   }
 
   public void displayCard(model.Card card) {
@@ -67,6 +48,6 @@ public class EnglishView implements View {
     } else {
       System.out.println("You Won!");
     }
-
+    System.out.println("");
   }
 }

@@ -1,10 +1,9 @@
 package view;
 
 /**
- * Implements a Swedish console view.
+ * Represents a Swedish console view.
  */
-public class SwedishView implements View {
-
+public class SwedishView extends View {
   /**
    * Shows a welcome message.
    */
@@ -16,24 +15,6 @@ public class SwedishView implements View {
     System.out.println("Hej Black Jack Världen");
     System.out.println("----------------------");
     System.out.println("Skriv 'p' för att Spela, 'h' för nytt kort, 's' för att stanna 'q' för att avsluta\n");
-  }
-
-  /**
-   * Returns pressed characters from the keyboard.
-
-   * @return the pressed character.
-   */
-  public int getInput() {
-    try {
-      int c = System.in.read();
-      while (c == '\r' || c == '\n') {
-        c = System.in.read();
-      }
-      return c;
-    } catch (java.io.IOException e) {
-      System.out.println("" + e);
-      return 0;
-    }
   }
 
   /**
@@ -72,6 +53,7 @@ public class SwedishView implements View {
     } else {
       System.out.println("Du vann!");
     }
+    System.out.println("");
   }
 
   private void displayHand(String name, Iterable<model.Card> hand, int score) {

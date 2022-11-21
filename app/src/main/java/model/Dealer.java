@@ -1,8 +1,12 @@
 package model;
 
+import java.util.LinkedList;
+import java.util.List;
 import model.rules.HitStrategy;
 import model.rules.NewGameStrategy;
+import model.rules.RuleVisitor;
 import model.rules.RulesFactory;
+import model.rules.WinnerStrategy;
 
 /**
  * Represents a dealer player that handles the deck of cards and runs the game using rules.
@@ -12,6 +16,8 @@ public class Dealer extends Player {
   private Deck deck;
   private NewGameStrategy newGameRule;
   private HitStrategy hitRule;
+  private WinnerStrategy winnerRule;
+  private List<NewCardObserver> subscribers;
 
   /**
    * Initializing constructor.
@@ -22,6 +28,35 @@ public class Dealer extends Player {
 
     newGameRule = rulesFactory.getNewGameRule();
     hitRule = rulesFactory.getHitRule();
+    winnerRule = rulesFactory.getWinnerRule();
+    subscribers = new LinkedList<NewCardObserver>();
+  }
+
+  /**
+   * Adds a subscriber.
+   *
+   * @param subscriber The subscriber to add.
+   */
+  public void subscribe(NewCardObserver subscriber) {
+    subscribers.add(subscriber);
+  }
+
+  /**
+   * Removes a subscriber.
+   *
+   * @param subscriber The subscriber to remove.
+   */
+  public void unsubscribe(NewCardObserver subscriber) {
+    subscribers.remove(subscriber);
+  }
+
+  /**
+   * Notifies all subscribers.
+   */
+  public void notifySubscribers() {
+    for (NewCardObserver s : subscribers) {
+      s.update();
+    }
   }
 
   /**
@@ -35,7 +70,7 @@ public class Dealer extends Player {
       deck = new Deck();
       clearHand();
       player.clearHand();
-      return newGameRule.newGame(deck, this, player);
+      return newGameRule.newGame(this, player);
     }
     return false;
   }
@@ -48,14 +83,24 @@ public class Dealer extends Player {
    */
   public boolean hit(Player player) {
     if (deck != null && player.calcScore() < maxScore && !isGameOver()) {
-      Card.Mutable c;
-      c = deck.getCard();
-      c.show(true);
-      player.dealCard(c);
-
+      drawAndDealCard(true, player);
       return true;
     }
     return false;
+  }
+
+  /**
+   * Draws a card from the deck, shows or hides it, and deals it to the dealer or player.
+   *
+   * @param show True if the card should be shown, false if it should be hidden
+   * @param receiver The dealer or player who should be dealt the card.
+   */
+  public void drawAndDealCard(Boolean show, Player receiver) {
+    Card.Mutable card = deck.getCard();
+    card.show(show);
+    receiver.dealCard(card);
+
+    notifySubscribers();
   }
 
   /**
@@ -70,7 +115,8 @@ public class Dealer extends Player {
     } else if (calcScore() > maxScore) {
       return false;
     }
-    return calcScore() >= player.calcScore();
+
+    return winnerRule.isDealerWinner(this, player);
   }
 
   /**
@@ -89,8 +135,27 @@ public class Dealer extends Player {
    * The player has choosen to take no more cards, it is the dealers turn.
    */
   public boolean stand() {
-    //TODO: implement me
+    if (deck != null) {
+      showHand();
+
+      while (hitRule.doHit(this) == true) {
+        drawAndDealCard(true, this);
+      }
+
+      return true;
+    }
+
     return false;
   }
 
+  /**
+   * Lets the visitor visit the game rules.
+   *
+   * @param visitor The rule visitor.
+   */
+  public void visitRules(RuleVisitor visitor) {
+    newGameRule.accept(visitor);
+    hitRule.accept(visitor);
+    winnerRule.accept(visitor);
+  }
 }

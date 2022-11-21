@@ -1,28 +1,27 @@
 package model.rules;
 
-import model.Card;
 import model.Dealer;
-import model.Deck;
 import model.Player;
 
+/**
+ * Represents an international new game strategy.
+ */
+public class InternationalNewGameStrategy implements NewGameStrategy {
+  /**
+   * Deals cards to dealer and player acording to the international new game rule.
+   */
+  public boolean newGame(Dealer dealer, Player player) {
+    Boolean show = true;
 
-class InternationalNewGameStrategy implements NewGameStrategy {
-
-  public boolean newGame(Deck deck, Dealer dealer, Player player) {
-    Card.Mutable c;
-
-    c = deck.getCard();
-    c.show(true);
-    player.dealCard(c);
-
-    c = deck.getCard();
-    c.show(true);
-    dealer.dealCard(c);
-
-    c = deck.getCard();
-    c.show(true);
-    player.dealCard(c);
+    dealer.drawAndDealCard(show, player);
+    dealer.drawAndDealCard(show, dealer);
+    dealer.drawAndDealCard(show, player);
 
     return true;
+  }
+
+  @Override
+  public void accept(RuleVisitor visitor) {
+    visitor.visit(this);
   }
 }

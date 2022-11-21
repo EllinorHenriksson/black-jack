@@ -1,5 +1,8 @@
 package model;
 
+import model.rules.RuleVisitor;
+import model.rules.RulesFactory;
+
 /**
  * Represents the entirety of the game. Acts as a Facade to the model.
  */
@@ -10,10 +13,16 @@ public class Game {
 
   /**
    * Constructor that creates a new game instance with a dealer and player.
+   *
+   * @param rulesFactory The rules factory to use in the game.
    */
-  public Game() {
-    dealer = new Dealer(new model.rules.RulesFactory());
+  public Game(RulesFactory rulesFactory) {
+    dealer = new Dealer(rulesFactory);
     player = new Player();
+  }
+
+  public void subscribe(NewCardObserver subscriber) {
+    dealer.subscribe(subscriber);
   }
 
   /**
@@ -58,8 +67,7 @@ public class Game {
    * @return True if the dealer has the initiaive.
    */
   public boolean stand() {
-    // TODO: implement me
-    return false;
+    return dealer.stand();
   }
 
   /**
@@ -98,4 +106,7 @@ public class Game {
     return player.calcScore();
   }
 
+  public void visitRules(RuleVisitor visitor) {
+    dealer.visitRules(visitor);
+  }
 }
